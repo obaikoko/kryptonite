@@ -1,0 +1,28 @@
+{
+  "name": "kryptonite",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Kryptonite backend learnable23 task ",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "author": "Igweachi Jesse",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "colors": "^1.4.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^8.4.0",
+    "node-base64-image": "^2.0.6",
+    "nodemailer": "^6.9.13",
+    "redis": "^4.6.14",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.2"
+  }
+}

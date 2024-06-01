@@ -210,7 +210,7 @@ Response:
 
 {
 
-"_id": "60d...12",
+"\_id": "60d...12",
 "owner": "60d...12",
 "base64": "base64-encoded-string...",
 "uploadedAt": "2023-06-01T12:00:00.000Z"

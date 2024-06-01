@@ -6,28 +6,59 @@ import asyncHandler from 'express-async-handler';
 // @route POST /api/images/upload
 // @privacy Private
 const uploadImage = asyncHandler(async (req, res) => {
-  const apiKey = req.headers['api-key'];
-  const { file } = req.body;
-  // checkes if user exist
-  const user = await User.findOne({ apiKey });
-  if (!user) {
-    res.status(401);
-    throw new Error('Invalid API key');
-  }
-
-  if (!file) {
-    res.status(400);
-    throw new Error('No file provided');
-  }
-
   try {
-    const base64Data = file.replace(/^data:image\/\w+;base64,/, '');
-    const image = new Image({ owner: user._id, base64: base64Data });
+    const apiKey = req.headers['api-key'];
+    const { file } = req.body;
+
+    // Check if user exists
+    const user = await User.findOne({ apiKey });
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid API key' });
+    }
+
+    // Check if file is provided
+    if (!file) {
+      return res.status(400).json({ error: 'No file provided' });
+    }
+
+    // Extract base64 data and check the MIME type
+    const matches = file.match(/^data:(image\/\w+);base64,(.+)$/);
+    if (!matches) {
+      return res
+        .status(400)
+        .json({ error: 'Invalid file format. Please upload an image.' });
+    }
+
+    const mimeType = matches[1];
+    const base64Data = matches[2];
+
+    const allowedMimeTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/jpg',
+      'image/gif',
+      'image/bmp',
+      'image/webp',
+    ];
+    if (!allowedMimeTypes.includes(mimeType)) {
+      return res.status(400).json({
+        error:
+          'Unsupported image format. Allowed formats: JPEG, PNG, GIF, BMP, WEBP.',
+      });
+    }
+
+    // Save the image to the database
+    const image = new Image({ owner: user._id, base64: base64Data, mimeType });
     await image.save();
-    res.status(201).json({ message: 'Image uploaded successfully', image });
+
+    return res
+      .status(201)
+      .json({ message: 'Image uploaded successfully', image });
   } catch (error) {
-    res.status(500);
-    throw new Error('Error uploading image', error);
+    console.error(error);
+    return res
+      .status(500)
+      .json({ error: 'Error uploading image', details: error.message });
   }
 });
 

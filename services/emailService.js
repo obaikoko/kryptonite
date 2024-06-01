@@ -23,11 +23,11 @@ const sendOtpEmail = async (email, otp) => {
       },
       to: email,
       subject: 'Kryptonite OTP password',
-      text: `here is your otp ${otp}`,
+      text: `here is your otp ${otp} which expires in 5 minutes`,
     };
 
     await transporter.sendMail(mailOptions);
-    return true; 
+    return true;
   } catch (error) {
     console.error(error);
     throw new Error('Email could not be sent.');

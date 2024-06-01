@@ -73,7 +73,9 @@ Description: Registers a new Kryptonian user with their email address.
 Request Body:
 
 {
+
 "email": "user@example.com"
+
 }
 
 Response:
@@ -103,13 +105,17 @@ Description: Sends a six-digit OTP to the provided email address.
 Request Body:
 
 {
+
 "email": "user@example.com"
+
 }
 
 Response:
 
 {
+
 "message": "OTP sent to email"
+
 }
 
 ### Verify OTP
@@ -121,15 +127,19 @@ Description: Verifies the OTP and generates an API key for the user.
 Request Body:
 
 {
+
 "email": "user@example.com",
 "otp": "123456"
+
 }
 
 Response:
 
 {
+
 "message": "OTP verified",
 "apiKey": "84f...4e"
+
 }
 
 ## 2. File Upload
@@ -147,7 +157,9 @@ api-key: your-api-key
 Request Body:
 
 {
+
 "file": "data:image/png;base64,...base64-encoded-string..."
+
 }
 
 Response:
@@ -197,10 +209,12 @@ Description: Retrieves a specific image by its ID. No authentication is required
 Response:
 
 {
-"\_id": "60d...12",
+
+"_id": "60d...12",
 "owner": "60d...12",
 "base64": "base64-encoded-string...",
 "uploadedAt": "2023-06-01T12:00:00.000Z"
+
 }
 
 ## Error Handling
